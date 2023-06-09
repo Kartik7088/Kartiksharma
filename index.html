@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weight and Fitness Tracker</title>
+  <style>
+    /* Add your custom CSS styles here */
+  </style>
+</head>
+<body>
+  <h1>Weight and Fitness Tracker</h1>
+
+  <form id="trackerForm" method="post" action="process_form.php">
+    <label for="weight">Weight (in kg):</label>
+    <input type="number" id="weight" name="weight" required>
+
+    <label for="height">Height (in cm):</label>
+    <input type="number" id="height" name="height" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $to = 'your-email@example.com';  // Replace with your email address
+
+  $weight = $_POST['weight'];
+  $height = $_POST['height'];
+  $age = $_POST['age'];
+  $gender = $_POST['gender'];
+  $goal = $_POST['goal'];
+
+  $subject = 'Weight and Fitness Tracker Form Submission';
+  $message = "Weight: $weight kg\nHeight: $height cm\nAge: $age\nGender: $gender\nGoal: $goal";
+
+  $headers = 'From:@Kartiksharma0933@gmail.com' . "\r\n" .
+    'Reply-To: your-email@example.com' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
+
+  // Send the email
+  mail($to, $subject, $message, $headers);
+
+  // Redirect the user to a thank you page
+  header('Location: thank_you.html');
+  exit();
+}
+?>" name="age" required>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="goal">Fitness Goal:</label>
+    <select id="goal" name="goal" required>
+      <option value="weight-loss">Weight Loss</option>
+      <option value="muscle-gain">Muscle Gain</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
